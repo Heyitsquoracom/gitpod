@@ -36,7 +36,7 @@ export function getRequiredScopes(entry: { type: string }) {
                 publicRepo: BitbucketServerOAuthScopes.Requirements.DEFAULT,
                 privateRepo: BitbucketServerOAuthScopes.Requirements.DEFAULT,
             };
-        case "Azure DevOps":
+        case "AzureDevOps":
             return {
                 default: AzureDevOpsScopes.Requirements.DEFAULT,
                 publicRepo: AzureDevOpsScopes.Requirements.DEFAULT,
@@ -54,7 +54,7 @@ export function getScopesOfProvider(entry: { type: string }) {
             return BitbucketOAuthScopes.ALL;
         case "BitbucketServer":
             return BitbucketServerOAuthScopes.ALL;
-        case "Azure DevOps":
+        case "AzureDevOps":
             return AzureDevOpsScopes.All;
     }
 }
