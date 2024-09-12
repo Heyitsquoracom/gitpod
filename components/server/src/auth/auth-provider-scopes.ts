@@ -8,6 +8,7 @@ import { GitHubScope } from "../github/scopes";
 import { GitLabScope } from "../gitlab/scopes";
 import { BitbucketOAuthScopes } from "../bitbucket/bitbucket-oauth-scopes";
 import { BitbucketServerOAuthScopes } from "../bitbucket-server/bitbucket-server-oauth-scopes";
+import { AzureDevOpsScopes } from "../azure-devops/scopes";
 
 export function getRequiredScopes(entry: { type: string }) {
     switch (entry.type) {
@@ -35,6 +36,12 @@ export function getRequiredScopes(entry: { type: string }) {
                 publicRepo: BitbucketServerOAuthScopes.Requirements.DEFAULT,
                 privateRepo: BitbucketServerOAuthScopes.Requirements.DEFAULT,
             };
+        case "Azure DevOps":
+            return {
+                default: AzureDevOpsScopes.Requirements.DEFAULT,
+                publicRepo: AzureDevOpsScopes.Requirements.DEFAULT,
+                privateRepo: AzureDevOpsScopes.Requirements.DEFAULT,
+            };
     }
 }
 export function getScopesOfProvider(entry: { type: string }) {
@@ -47,5 +54,7 @@ export function getScopesOfProvider(entry: { type: string }) {
             return BitbucketOAuthScopes.ALL;
         case "BitbucketServer":
             return BitbucketServerOAuthScopes.ALL;
+        case "Azure DevOps":
+            return AzureDevOpsScopes.All;
     }
 }
