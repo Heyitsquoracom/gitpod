@@ -80,6 +80,14 @@ export namespace BitbucketServerOAuthScopes {
     export const DEFAULT = ALL;
 }
 
+export namespace AzureDevOpsOAuthScopes {
+    export const READ_USER = "https://app.vssps.visualstudio.com/vso.profile";
+    export const READ_REPO = "https://app.vssps.visualstudio.com/vso.code_write";
+
+    export const ALL = [READ_USER, READ_REPO];
+    export const DEFAULT = ALL;
+}
+
 export function getScopesForAuthProviderType(type: AuthProviderType | string) {
     switch (type) {
         case AuthProviderType.GITHUB:
@@ -94,6 +102,9 @@ export function getScopesForAuthProviderType(type: AuthProviderType | string) {
         case AuthProviderType.BITBUCKET_SERVER:
         case "BitbucketServer":
             return BitbucketServerOAuthScopes.ALL;
+        case AuthProviderType.AZURE_DEVOPS:
+        case "AzureDevOps":
+            return AzureDevOpsOAuthScopes.ALL;
     }
 }
 
@@ -126,6 +137,13 @@ export function getRequiredScopes(type: AuthProviderType | string) {
                 default: BitbucketServerOAuthScopes.DEFAULT,
                 publicRepo: BitbucketServerOAuthScopes.DEFAULT,
                 privateRepo: BitbucketServerOAuthScopes.DEFAULT,
+            };
+        case AuthProviderType.AZURE_DEVOPS:
+        case "AzureDevOps":
+            return {
+                default: AzureDevOpsOAuthScopes.DEFAULT,
+                publicRepo: AzureDevOpsOAuthScopes.DEFAULT,
+                privateRepo: AzureDevOpsOAuthScopes.DEFAULT,
             };
     }
 }
