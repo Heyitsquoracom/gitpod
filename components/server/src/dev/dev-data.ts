@@ -7,6 +7,7 @@
 import { IssueContext, User, PullRequestContext, Repository, Token } from "@gitpod/gitpod-protocol";
 import { GitHubScope } from "../github/scopes";
 import { GitLabScope } from "../gitlab/scopes";
+import { AzureDevOpsScopes } from "../azure-devops/scopes";
 
 export namespace DevData {
     export function createTestUser(): User {
@@ -39,6 +40,11 @@ export namespace DevData {
     }
 
     export function createGitHubTestToken(): Token {
+        if (!process.env.GITPOD_TEST_TOKEN_GITHUB) {
+            console.error(
+                `GITPOD_TEST_TOKEN_GITHUB env var is not set\n\n\t export GITPOD_TEST_TOKEN_GITHUB='{"username": "gitpod-test", "token": $AZURE_TOKEN}'`,
+            );
+        }
         return {
             ...getTokenFromEnv("GITPOD_TEST_TOKEN_GITHUB"),
             scopes: [GitHubScope.EMAIL, GitHubScope.PUBLIC, GitHubScope.PRIVATE],
@@ -62,6 +68,13 @@ export namespace DevData {
         return {
             ...getTokenFromEnv("GITPOD_TEST_TOKEN_GITLAB"),
             scopes: [GitLabScope.READ_USER, GitLabScope.API],
+        };
+    }
+
+    export function createAzureDevOpsTestToken(): Token {
+        return {
+            ...getTokenFromEnv("GITPOD_TEST_TOKEN_AZURE_DEVOPS"),
+            scopes: [...AzureDevOpsScopes.Requirements.DEFAULT],
         };
     }
 
